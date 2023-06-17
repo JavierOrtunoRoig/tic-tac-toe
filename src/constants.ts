@@ -1,9 +1,9 @@
-export type Turn = 'X' | 'O' | null;
+export type Turn = '✖' | '◯' | null;
 
-export const TURNS = { 
+export const TURNS: Record<string, Turn> = { 
   X: '✖',
   O: '◯'
-}
+};
 
 export const WINNER_COMBOS = [
   [0, 1, 2],
@@ -14,4 +14,4 @@ export const WINNER_COMBOS = [
   [2, 5, 8],
   [0, 4, 8],
   [2, 4, 6]
-]
+];

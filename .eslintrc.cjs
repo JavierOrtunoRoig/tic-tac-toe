@@ -10,5 +10,8 @@ module.exports = {
   plugins: ['react-refresh'],
   rules: {
     'react-refresh/only-export-components': 'warn',
+    'semi': 'error',
+    'react-hooks/exhaustive-deps': 'off',
+    'indent': ['error', 2],
   },
-}
+};

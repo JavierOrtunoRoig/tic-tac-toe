@@ -1,32 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Square } from "./components/Square";
-import { TURNS, WINNER_COMBOS } from './constants';
+import { TURNS, Turn, WINNER_COMBOS } from './constants';
 import confetti from "canvas-confetti";
+import { Information } from './components/Information';
 
 function App() {
 
-  const [board, setBoard] = useState(Array(9).fill(null));
-  const [turn, setTurn] = useState('✖');
+  const [board, setBoard] = useState<Turn[]>(Array(9).fill(null));
+  const [turn, setTurn] = useState<Turn>('✖');
 
-  useEffect(() => {
-    const winner = checkWinner();
-    if (winner) {
-      setBoard(Array(9).fill(null));
-      setTurn(TURNS.X);
-      confetti();
-      alert(`Winner is ${winner}`);
-    }
-  }, [board]);
-
-  const updateSquare = (position: number) => {
-    if (board[position] || checkWinner()) return;
-    const newBoard = [...board];
-    newBoard[position] = turn;
-    setTurn(turn === TURNS.X ? TURNS.O : TURNS.X);
-    setBoard(newBoard);
-  }
-
-  const checkWinner = () => {
+  const checkWinner = (board: Turn[]) => {
     for (let i = 0; i < WINNER_COMBOS.length; i++) {
       const [a,b,c] = WINNER_COMBOS[i];
       if (board[a] && board[a] === board[b] && board[a] === board[c]) {
@@ -34,16 +17,39 @@ function App() {
       }
     }
     return null;  
-  }
+  };
+
+  const winner = checkWinner(board) ? true : false;
+  const oppositeTurn = turn === TURNS.X ? TURNS.O : TURNS.X;
+
+  console.log(winner);
+  useEffect(() => {
+    const winner = checkWinner(board);
+    if (winner) {
+      confetti();
+    }
+  }, [board]);
+
+  const updateSquare = (position: number) => {
+    if (board[position] || checkWinner(board)) return;
+    const newBoard = [...board];
+    newBoard[position] = turn;
+    setTurn(turn === TURNS.X ? TURNS.O : TURNS.X);
+    setBoard(newBoard);
+  };
 
   return (
     <>
-     <h1>Tic Tac Toe</h1>
-     <section className="board">
-      { board.map((cell, index) => <Square key={index} value={cell} position={index} updateSquare={updateSquare}/> ) }
-     </section>
+      <h1>Tic Tac Toe</h1>
+      <section className="board">
+        { board.map((cell, index) => <Square key={index} value={cell} position={index} updateSquare={updateSquare}/> ) }
+      </section>
+      { winner
+        ? <Information title='Winner' value={oppositeTurn} winner={true}/>
+        : <Information title='Next turn' value={turn}/>
+      }
     </>
-  )
+  );
 }
 
-export default App
+export default App;
