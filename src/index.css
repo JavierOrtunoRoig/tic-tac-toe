@@ -70,3 +70,23 @@ h1 {
 .winner .square {
   border-color: greenyellow;
 }
+
+@media (max-width: 600px) {
+  :root {
+    --tam: 300px;
+  }
+  .board {
+    grid-template-columns: repeat(3, 100px);
+    width: var(--tam);
+    height: var(--tam);
+    gap: 10px;
+  }
+  .square {
+    width: 100px;
+    height: 100px;
+    font-size: 3rem;
+  }
+  .next-turn {
+    font-size: 1.5rem;
+  }
+}
