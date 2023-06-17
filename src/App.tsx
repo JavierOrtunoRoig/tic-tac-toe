@@ -1,28 +1,18 @@
 import { useState, useEffect } from 'react';
 import { Square } from "./components/Square";
-import { TURNS, Turn, WINNER_COMBOS } from './constants';
+import { TURNS, Turn } from './constants';
 import confetti from "canvas-confetti";
 import { Information } from './components/Information';
+import { checkWinner } from './helpers';
 
 function App() {
 
   const [board, setBoard] = useState<Turn[]>(Array(9).fill(null));
   const [turn, setTurn] = useState<Turn>('✖');
 
-  const checkWinner = (board: Turn[]) => {
-    for (let i = 0; i < WINNER_COMBOS.length; i++) {
-      const [a,b,c] = WINNER_COMBOS[i];
-      if (board[a] && board[a] === board[b] && board[a] === board[c]) {
-        return board[a];
-      }
-    }
-    return null;  
-  };
-
   const winner = checkWinner(board) ? true : false;
   const oppositeTurn = turn === TURNS.X ? TURNS.O : TURNS.X;
 
-  console.log(winner);
   useEffect(() => {
     const winner = checkWinner(board);
     if (winner) {
