@@ -7,8 +7,13 @@ interface SquareProps {
 }
 
 export function Square({ value, position, updateSquare }: SquareProps) {
+
+  const handleClick = () => {
+    updateSquare(position);
+  };
+
   return (
-    <div className="square" onClick={() => updateSquare(position)}>
+    <div className="square" onClick={handleClick}>
       <span>{value}</span>
     </div>
   );
