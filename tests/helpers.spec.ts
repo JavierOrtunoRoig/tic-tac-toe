@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { checkWinner } from '../helpers';
-import { Turn } from '../constants';
+import { checkWinner } from '../src/helpers';
+import { Turn } from '../src/constants';
 
 describe('helpers', () => {
   describe("checkWinner", () => {
